@@ -12,20 +12,6 @@ router.get('/', function(req, res, next) {
   })
 });
 
-// Get a single artist by ID
-router.get('/:id', async (req, res) => {
-  try {
-    const artist = await Artist.findById(req.params.id);
-    if (!artist) {
-      return res.status(404).json({ message: 'Artist not found' }); // Handle artist not found
-    }
-    res.json(artist);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: e.message });
-  }
-});
-
 router.post('/add', function (req, res, next) {
     if (req.body.lengtg == 0) return;
     const { name, email, descripcion, imagen, vacaciones } = req.body;
