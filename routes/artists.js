@@ -12,23 +12,6 @@ router.get('/', function(req, res, next) {
   })
 });
 
-// Get artist by name (using slug)
-router.get('/:artistSlug', function(req, res, next) {
-  const artistSlug = req.params.artistSlug;
-
-  Artist.findOne({ name: { $regex: new RegExp("^" + artistSlug + "$", "i") } }) // Exact case-insensitive match
-    .then(artist => {
-      if (!artist) {
-        return res.status(404).json({ message: 'Artist not found' });
-      }
-      res.json(artist);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({ message: 'Server error' });
-    });
-});
-
 router.post('/add', function (req, res, next) {
     if (req.body.lengtg == 0) return;
     const { name, email, descripcion, imagen, vacaciones } = req.body;
