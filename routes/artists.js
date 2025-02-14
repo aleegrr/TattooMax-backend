@@ -12,6 +12,23 @@ router.get('/', function(req, res, next) {
   })
 });
 
+// Get artist by name (case-insensitive)
+router.get('/name/:name', function(req, res, next) {
+  const artistName = req.params.name;
+
+  Artist.findOne({ name: { $regex: new RegExp(artistName, "i") } }) // Case-insensitive search
+    .then(artist => {
+      if (!artist) {
+        return res.status(404).json({ message: 'Artist not found' }); // Send 404 if not found
+      }
+      res.json(artist);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Server error' }); // Handle potential errors
+    });
+});
+
 router.post('/add', function (req, res, next) {
     if (req.body.lengtg == 0) return;
     const { name, email, descripcion, imagen, vacaciones } = req.body;
