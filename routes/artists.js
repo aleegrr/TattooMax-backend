@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 });
 
 // Get artist by name (case-insensitive)
-router.get('/name/:name', function(req, res, next) {
+router.get('/:name', function(req, res, next) {
   const artistName = req.params.name;
 
   Artist.findOne({ name: { $regex: new RegExp(artistName, "i") } }) // Case-insensitive search
